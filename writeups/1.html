@@ -1,0 +1,264 @@
+<html>
+    <head>
+        <title>PARTYMOD! - Writeup: PARTYMOD for Tony Hawk's Pro Skater 2</title>
+        <link rel="stylesheet" href="../styles.css"/>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <a href="../index.html">
+                    <h1>🎉 PARTYMOD! 🎉</h1>
+                </a>
+            </div>
+            <div class="writeupssection">
+                <div class="writeupheader">
+                    <h4>▪ Writeup:</h2>
+                    <h2>PARTYMOD for Tony Hawk's Pro Skater 2</h2>
+                    <h6>Originally posted May 05, 2024, updated Dec 16, 2024</h6>
+                </div>
+                <div class="writeupcontent">
+                    <sub>
+                        <i>
+                            <br/>
+                            NOTE: The following was originally posted to Cohost, a site that is going down 
+                            soon.  I added some images to this post, as it originally had none.
+                        </i>
+                    </sub>
+                    <p>
+                        For the past couple of months, I've been developing something I'd been scheming 
+                        about for what looks to be half a year or so, judging by file and commit dates: 
+                        a modernization patch for THPS2, featuring a new renderer (now using Vulkan 
+                        instead of D3D7!), among other changes.
+                    </p>
+                    <p>
+                        Some notes about the process and game itself:
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/1/partymodthps2.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/1/partymodthps2.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>PS1 look vs Dreamcast look</sub>
+                        </div>
+                    </div>
+                    <p>
+                        THPS2 was ported to PC by LTI Gray Matter, a studio that specialized in porting 
+                        games to PC, including a few games based on Neversoft's old 'M3D' (there's no 
+                        real formal name, but that's what I'll call it. more on that later) engine.
+                    </p>
+                    <p>
+                        First, to start the whole process of patching the game, I looked around to see 
+                        what kind of help I could find for reverse engineering. The first resource I 
+                        found was actually the very first demo of the game, Psy-Q debug symbols managed 
+                        to leak with a German (iirc) release of the demo. This release looked to be 
+                        really dated, with its structure matching closer to THPS1, so I looked around 
+                        a bit more, ultimately discovering that the iOS release of the game also had 
+                        debugging symbols, and luckily that was also based off the PC release! 
+                        Additionally I've since learned that apparently the Mac release also didn't 
+                        have symbols stripped out. Having symbols available was a huge help for 
+                        navigating the reverse engineering for the project.
+                    </p>
+                    <p>
+                        Something I found interesting in the credits is that someone is credited for 
+                        "GTE emulation". That's kind of a theme for this port: all of the 
+                        matrix math on the PS1 would've been done through its GTE chip, so they recreated 
+                        that for PC. Past that, they also handle controllers by recreating PS1 controller 
+                        button structures (this would also be the approach taken for the later PS2 games, 
+                        those recreate full dualshock 2 packets!), even the mouse support ends up 
+                        pressing fake buttons (aside from menu selection, which i found odd)! 
+                        Most importantly, all of the graphics are a sort of emulation of the PS1 GPU:
+                    </p>
+                    <p>
+                        The renderer is built essentially in two halves: there's one half that performs 
+                        all transformations, clipping, and ordering (using the original "M3D" functions 
+                        from Neversoft, presumably the M is for Mick West, programmer and co-founder of 
+                        Neversoft (now a big-time Skeptic! weird!)), then there's the other half which 
+                        finally gets those rasterized. The first half talks to the second half through 
+                        slightly modified PS1 gpu commands (and a sizeable new rendering system involving 
+                        a special command that we'll get to). All UI and some effects like sparks, dust, 
+                        and shattered objects are done through original PS1 gpu commands, with a single 
+                        floating point depth value tacked on to make them work in the depth buffer.
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/1/earlypolys.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/1/earlypolys.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Early shot of untextured polygons</sub>
+                        </div>
+                    </div>
+                    <p>
+                        The most important command is <code>0xB0</code>. On the PS1 it was a blit to VRAM
+                        (iirc), but in THPS2 PC, it's <code>renderDXPOLY()</code>, this is an extra GPU 
+                        command that handles all of the actual 3D rasterization in the game. While 
+                        the previous commands have vertices specified in integer, this command uses 
+                        floating point, basically ready to go directly into direct3d after fog and gamma
+                        correction are applied to vertex colors. It also allows for a flexible number of 
+                        vertices, though it only ever renders triangles and quads. Despite having a depth 
+                        buffer now, all polygons are pre-sorted by depth.
+                    </p>
+                    <p>
+                        When translating these commands to Vulkan, I decided on a bindless style 
+                        structure. All draws get put into a single vertex buffer including position, 
+                        UVs, vertex color, and texture for each vertex. Textures are all placed into a 
+                        single array, so that the fragment shader can sample from any texture, depending 
+                        on vertex data. This allowed me to batch polygon draws even if they had 
+                        different textures. That is, until i discovered that this causes rendering 
+                        issues on AMD. Oh well!
+                    </p>
+                    <p>
+                        Because the new renderer has a depth buffer, Gray Matter needed to do some 
+                        tricks to get coplanar polygons to display in the correct order: it's not 
+                        particularly special, but they added a couple depth bias factors, some of which 
+                        can misbehave and make certain objects appear in the wrong order. Fun!
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/1/brokenzbuffer.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/1/brokenzbuffer.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Note the lights shining through the awning and the tunnel</sub>
+                        </div>
+                    </div>
+                    <p>
+                        These sorts of hacks were the name of the game for Gray Matter, who also applied 
+                        Treyarch's high-resolution textures from the Dreamcast release of THPS2 to the 
+                        game. These textures aren't baked into each asset file like the PS1 textures, 
+                        instead the game intercepts textures when loading them into VRAM and replaces 
+                        them from external BMP files named after the 32-bit CRC of the texture's 
+                        original file name (Neversoft was a big fan of CRC for hashing, here's Mick West 
+                        talking about it: 
+                        <a href="https://cowboyprogramming.com/2007/01/04/practical-hash-ids/">
+                            https://cowboyprogramming.com/2007/01/04/practical-hash-ids/
+                        </a>). If the function that replaces the texture data is disabled, the game will 
+                        just fall back to the PS1 textures.
+                    </p>
+                    <p>
+                        These textures weren't really designed for the original texture blending 
+                        algorithm of the PS1 (which multiplies the texture by the vertex color times 
+                        two), so Gray Matter chose to lighten every surface through a gamma lookup table, 
+                        which also results in the game looking washed out when compared to the PS1 
+                        riginal. This wasn't quite enough for some parts of levels (the skies in Venice 
+                        Beach and School II, specifically), so Gray Matter also placed some direct 
+                        modifications to the vertex colors in these levels into the rendering pipeline. 
+                        With the original texture blending algorithm implemented and with original textures, 
+                        removing these hacks restored most of the PS1 look of the game.
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/1/comparison_nyc.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/1/comparison_nyc.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>New York got a lot darker, it's actually night now!</sub>
+                        </div>
+                    </div>
+                    <p>
+                        An issue with the game is that many UI assets were made assuming that the game 
+                        would be rendering at a 4:3 512x240, making certain things like the game's HUD 
+                        to be sampled at weird offsets. Now that we had shaders at our disposal, I 
+                        applied a strategic bilinear sampler so that we could get a sharp 4:3 512x240 
+                        without shimmering artifacts from normal nearest neighbor sampling.
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/1/comparison_marseille.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/1/comparison_marseille.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Looking worse to look better. I'm always saying this</sub>
+                        </div>
+                    </div>
+                    <p>
+                        Speaking of resolutions, the game has a really interesting inherited trait from 
+                        PS1: the way that viewports work emulates PS1 exactly. Viewports are always 
+                        expressed on a 512x512 grid that assumes a 512x240 frame. The viewport shifts 
+                        by 256 pixels every frame, recreating the double buffering effect they would've 
+                        used on the PS1 framebuffer.
+                    </p>
+                    <p>
+                        With the renderer taken care of, I wanted to see if I could fix the crashes the 
+                        game would regularly run into. Often when loading into the Bullring, the final 
+                        level, the game would crash. The game leaves behind a log where you can find 
+                        that the game fails to process some things in the level's trig file (this file 
+                        is a script that defines what to load into the level). Once I even got it to 
+                        load, but with absolutely nothing in the level:
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <div class="writeupembedcontent">
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/v0tWmr7Fp2A?si=wbaVd9VXs17bh-mi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                            <sub>This happened to me in real life once</sub>
+                        </div>
+                    </div>
+                    <p>
+                        There are also a number of other log lines yelling about pointers not being 
+                        lword-aligned. That seems bad! After some messing with the memory manager, I 
+                        figured out why this happens: the memory manager is extremely susceptible to 
+                        memory corruption if out of bounds writes occur.
+                    </p>
+                    <p>
+                        Memory allocation blocks are handled with all block data existing in the memory 
+                        pool alongside the blocks themselves. Each block has an eight byte header, where 
+                        the first byte is its length, and the second is its parent. The parent goes 
+                        unused when the block is allocated, so memory actually overwrites that portion 
+                        of the header. It's easy to see how data gets corrupt: when an out-of-bounds 
+                        write occurs, it's overwriting the next block's header, changing its size. When 
+                        trying to find where this corruption was occurring, I accidentally made 
+                        allocations four bytes too large, which happened to fix the corruption problem 
+                        entirely. How convenient!
+                    </p>
+                    <p>
+                        There were a couple more common crashes: one would occur when the memory manager 
+                        ran out of memory. When this happens, the game will enter a while(true) loop. 
+                        Because the original game would suppress Alt-F4, windows key, and appear in 
+                        front of almost applications, this made the game near-impossible to exit when 
+                        it ran out of memory. because of the memory corruption, this would happen pretty 
+                        regularly if you would speedrun the game. There was one last, unknown crash 
+                        where D3D would run into an error after playing the final fmv upon completing 
+                        the game. No idea what caused that, but the renderer rewrite fixed it anyway.
+                    </p>
+                    <p>
+                        Writing this patch was very fun and is the project that I'm most proud of so 
+                        far. I'm really happy to have managed to release a Vulkan 1.3 renderer with 
+                        relatively few problems (other than some AMD crashes cropping up here and there). 
+                        I hope to get more people into speedrunning this game as it's been one of my 
+                        favorites in the series, it just feels great to play. anyway that's it go check 
+                        it out
+                    </p>
+
+                    <div class="writeuphomebuttoncontainer">
+                        <div class="writeuphomebutton">
+                            <a href="../index.html">
+                                <div class="buttonlink">
+                                    ← Back
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

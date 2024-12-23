@@ -1,0 +1,396 @@
+<html>
+    <head>
+        <title>PARTYMOD! - Writeup: Building the PARTYMOD THPS2 Renderer</title>
+        <link rel="stylesheet" href="../styles.css"/>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <a href="../index.html">
+                    <h1>🎉 PARTYMOD! 🎉</h1>
+                </a>
+            </div>
+            <div class="writeupssection">
+                <div class="writeupheader">
+                    <h4>▪ Writeup:</h2>
+                    <h2>Building the PARTYMOD THPS2 Renderer</h2>
+                    <h6>Posted Dec 17, 2024</h6>
+                </div>
+                <div class="writeupcontent">
+                    <p>
+                        I had a bunch of early screenshots taken while putting the PARTYMOD THPS2 renderer,
+                        so I figured I would post them to illustrate how the renderer came together.  
+                        The image boxes are a bit broken, but i don't care to fix them at the moment 👍
+                    </p>
+                    <p>
+                        Mar 02, 2024: 
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-03-02 223446.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-03-02 223446.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Renderer is stubbed enough to run the game, clear color is displayed</sub>
+                        </div>
+                    </div>
+                    <p>
+                        Mar 03, 2024: 
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-03-03 233341.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-03-03 233341.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>First polygons are displayed</sub>
+                        </div>
+                    </div>
+                    <p>
+                        Mar 04, 2024: 
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-03-04 104142.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-03-04 104142.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>DXPOLY is now handled, 3D scenes work!</sub>
+                        </div>
+                    </div>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-03-04 114714.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-03-04 114714.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Untextured DXPOLYs, like the shadow, are broken</sub>
+                        </div>
+                    </div>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-03-04 125537.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-03-04 125537.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Fixed untextured DXPOLYs</sub>
+                        </div>
+                    </div>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-03-04 230301.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-03-04 230301.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Alternate shot showing broken depth on the Venice Beach shoreline</sub>
+                        </div>
+                    </div>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-03-04 232946.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-03-04 232946.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>The game is completeable!</sub>
+                        </div>
+                    </div>
+                    <p>
+                        Mar 05, 2024: 
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-03-05 133657.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-03-05 133657.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Did you know that Elissa Steamer and Geoff Rowley's black pants are done via vertex colors?  That's why they're white on N64!</sub>
+                        </div>
+                    </div>
+                    <p>
+                        Mar 08, 2024: 
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-03-08 013137.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-03-08 013137.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Line drawing implemented, as well as blending modes</sub>
+                        </div>
+                    </div>
+                    <p>
+                        Mar 10, 2024: 
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-03-10 000003.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-03-10 000003.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Wireframe drawing implemented</sub>
+                        </div>
+                    </div>
+                    <p>
+                        Mar 16, 2024: 
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-03-16 235521.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-03-16 235521.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Rendering is now done to an intermediate texture, drawn incorrectly here</sub>
+                        </div>
+                    </div>
+                    <p>
+                        Mar 17, 2024: 
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-03-17 001538.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-03-17 001538.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Game is now scaled from 640x480 to window size</sub>
+                        </div>
+                    </div>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-03-17 001538.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-03-17 010110.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Letterboxing and Pillarboxing implemented</sub>
+                        </div>
+                    </div>
+                    <p>
+                        Mar 20, 2024: 
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-03-20 014909.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-03-20 014909.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Broke the vertex format when implementing texturing, fun little bug</sub>
+                        </div>
+                    </div>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-03-20 113627.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-03-20 113627.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>UVs are implemented, texture loading still in progress</sub>
+                        </div>
+                    </div>
+                    <p>
+                        Mar 21, 2024: 
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-03-21 024249.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-03-21 024249.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Textures are loading, but UVs aren't corrected for non-power-of-two textures</sub>
+                        </div>
+                    </div>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-03-21 024354.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-03-21 024354.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Texturing complete!  NYC sky still incorrect</sub>
+                        </div>
+                    </div>
+                    <p>
+                        Apr 10, 2024 (continuing after a break to participate in a speedrun marathon with the current progress): 
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-04-10 202842.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-04-10 202842.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>FMVs partially working</sub>
+                        </div>
+                    </div>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-04-10 233831.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-04-10 233831.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Bug in playing the level FMVs.  Texture sampling did Geoff Rowley dirty</sub>
+                        </div>
+                    </div>
+                    <p>
+                        Apr 11, 2024: 
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-04-11 000236.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-04-11 000236.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Level FMVs working! Still sampled poorly</sub>
+                        </div>
+                    </div>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-04-11 002525.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-04-11 002525.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Video player complete</sub>
+                        </div>
+                    </div>
+                    <p>
+                        Apr 25, 2024: 
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-04-25 150506.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-04-25 150506.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Fixed NYC sky!</sub>
+                        </div>
+                    </div>
+                    <p>
+                        Apr 28, 2024: 
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-04-28 025353.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-04-28 025353.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Sprites draw incorrectly thin when game is running at 512x240 (PSX resolution)</sub>
+                        </div>
+                    </div>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-04-28 140345.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-04-28 140345.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>I figured out a hack to make sprites draw less narrowly, but it's rather distorted</sub>
+                        </div>
+                    </div>
+                    <p>
+                        Sep 25, 2024 (post-release, I started looking into incorrect texture transparency): 
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-09-25 185404.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-09-25 185404.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Textures now have correct semi-transparent bits, but the shader is incomplete</sub>
+                        </div>
+                    </div>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/thps2progress/Screenshot 2024-09-25 190750.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/thps2progress/Screenshot 2024-09-25 190750.png"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>The THPS sign is finally showing opaque!!</sub>
+                        </div>
+                    </div>
+
+                    <div class="writeuphomebuttoncontainer">
+                        <div class="writeuphomebutton">
+                            <a href="../index.html">
+                                <div class="buttonlink">
+                                    ← Back
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

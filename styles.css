@@ -1,0 +1,356 @@
+body {
+    background-color: #101010;
+}
+
+.container {
+    background-color: #202020;
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 32px;
+    margin-bottom: 128px;
+    width: 100%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #303030;
+    border-radius: 4px;
+    filter: drop-shadow(8px 8px 0px #000000c0);
+}
+
+@media (min-width: 1024px) {
+    .container {
+        width: 1024px;
+    }
+}
+
+.header {
+    text-align: center;
+    border-style: solid;
+    border-width: 0px 0px 1px 0px;
+    border-color: #303030;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 32px;
+    padding-bottom: 32px;
+}
+
+.header a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.releasesection {
+    border-style: solid;
+    border-width: 0px 0px 1px 0px;
+    border-color: #303030;
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-bottom: 32px;
+    padding-top: 16px;
+}
+
+.writeupssection {
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-bottom: 32px;
+    padding-top: 16px;
+}
+
+.releasecontainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-items: center;
+}
+
+.releasebox {
+    align-self: center;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #606060;
+    border-radius: 4px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    width:460px;
+    background-color: #404040;
+    filter: drop-shadow(6px 6px 0px #000000c0);
+}
+
+.imagecontainer {
+    display: flex;
+    width: 95%;
+    margin: auto;
+}
+
+.image {
+    float: left;
+    display: block;
+    margin: auto;
+    width: 45%;
+    filter: drop-shadow(4px 4px 0px #000000c0);
+}
+
+.image img {
+    display: block;
+    margin: auto;
+    width: 100%;
+}
+
+.buttoncontainer {
+    display: flex;
+    margin: auto;
+    justify-items: center;
+    width: 75%;
+}
+
+.button {
+    align-self: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    border-style: outset;
+    width: 160px;
+    line-height: 32px;
+    text-align: center;
+    height: 32px;
+    filter: drop-shadow(4px 4px 0px #000000c0);
+}
+
+.buttonlink {
+    width: 100%;
+    height: 100%;
+}
+
+.download {
+    background-color: #008000;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #00c000;
+    border-radius: 4px;
+}
+
+.download:hover {
+    background-color: #009000;
+}
+
+.download a {
+    text-decoration: none;
+    color: #c0ffc0;
+    background-color: #008000;
+}
+
+.repo {
+    background-color: #808080;
+    color: #ffffff;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #c0c0c0;
+    border-radius: 4px;
+}
+
+.repo:hover {
+    background-color: #909090;
+}
+
+.repo a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.writeupslist {
+    background-color: #303030;
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 32px;
+    margin-bottom: 32px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #505050;
+    border-radius: 4px;
+    filter: drop-shadow(4px 4px 0px #000000c0);
+}
+
+.writeupcontainerodd {
+    background-color: #202020;
+}
+
+.writeupcontainerodd:hover {
+    background-color: #303030;
+}
+
+.writeupcontainerodd a {
+    text-decoration: none;
+    color: #ffffff;
+    margin: 0px;
+}
+
+.writeupcontainereven {
+    background-color: #282828;
+}
+
+.writeupcontainereven:hover {
+    background-color: #303030;
+}
+
+.writeupcontainereven a {
+    text-decoration: none;
+    color: #ffffff;
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+}
+
+.writeup {
+    display: flex;
+    margin: 0px;
+    width: 100%;
+    height: 64px;
+}
+
+.writeup h3 {
+    margin: 0px;
+}
+
+.writeuptitle {
+    margin: auto;
+    width: 80%;
+    height: 100%;
+    border-style: solid;
+    border-width: 0px 1px 0px 0px;
+    border-color: #303030;
+    padding-left: 16px;
+    line-height: 64px;
+    overflow: hidden;
+}
+
+.writeupdate {
+    margin: auto;
+    color: #c0c0c0;
+    width: 20%;
+    height: 100%;
+    line-height: 64px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.writeupheader {
+    border-style: solid;
+    border-width: 0px 0px 1px 0px;
+    border-color: #303030;
+}
+
+.writeupheader h2 {
+    margin-top: 8px;
+    margin-bottom: 16px;
+    margin-left: 16px;
+}
+
+.writeupheader h4 {
+    margin-top: 0px;
+    margin-bottom: 16px;
+}
+
+.writeupcontent code {
+    background-color: #303030;
+    padding: 1px 1px 0px 1px;
+    border-style: solid;
+    border-radius: 3px;
+    border-width: 1px;
+    border-color: #404040;
+}
+
+.writeupcontent a {
+    color: #ffffff;
+}
+
+.writeupheader h6 {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.writeupembedcontainer {
+    display: flex;
+    width: 100%;
+}
+
+.writeupembed {
+    align-self: center;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #606060;
+    border-radius: 4px;
+    text-align: center;
+    font-style: italic;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    padding: 16px;
+    padding-bottom: 8px;
+    background-color: #404040;
+    max-width: 720px;
+    filter: drop-shadow(6px 6px 0px #000000c0);
+}
+
+.writeupembedcontentcontainer {
+    display: flex;
+}
+
+.writeupembedcontent {
+    align-self: center;
+    text-align: center;
+    margin: auto;
+    margin-bottom: 8px;
+    background-color: #404040;
+    filter: drop-shadow(2px 2px 0px #000000c0);
+}
+
+.writeupembedcontent a {
+    margin: auto;
+}
+
+.writeupembedcontent img {
+    padding: 0px;
+    max-width: 720px;
+    max-height: 300px;
+}
+
+.writeuphomebuttoncontainer {
+    display: flex;
+}
+
+.writeuphomebutton {
+    align-self: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    width: 160px;
+    line-height: 64px;
+    text-align: center;
+    height: 64px;
+    filter: drop-shadow(4px 4px 0px #000000c0);
+    background-color: #808080;
+    color: #ffffff;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #c0c0c0;
+    border-radius: 4px;
+}
+
+.writeuphomebutton:hover {
+    background-color: #909090;
+}
+
+.writeuphomebutton a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 2em;
+    
+}
+

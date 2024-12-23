@@ -1,0 +1,263 @@
+<html>
+    <head>
+        <title>PARTYMOD! - Writeup: PARTYMOD for Mat Hoffman's Pro BMX</title>
+        <link rel="stylesheet" href="../styles.css"/>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <a href="../index.html">
+                    <h1>🎉 PARTYMOD! 🎉</h1>
+                </a>
+            </div>
+            <div class="writeupssection">
+                <div class="writeupheader">
+                    <h4>▪ Writeup:</h2>
+                    <h2>PARTYMOD for Mat Hoffman's Pro BMX</h2>
+                    <h6>Originally posted Aug 29, 2024</h6>
+                </div>
+                <div class="writeupcontent">
+                    <sub>
+                        <i>
+                            <br/>
+                            NOTE: The following was originally posted to Cohost, a site that is going down 
+                            soon.
+                        </i>
+                    </sub>
+                    <p>
+                        A couple days ago, I released a mod for Mat Hoffman's Pro BMX on PC that makes it 
+                        much more playable on modern systems (featuring a renderer replacement and a bunch 
+                        of bug fixes). It's a sister project to my last project, PARTYMOD for THPS2.
+                    </p>
+                    <p>
+                        I did a writeup for my previous mod and I really liked doing that, so here's another:
+                    </p>
+                    <p>
+                        Mat Hoffman's Pro BMX was Activision's first attempt at cashing in on their previous 
+                        success with the Tony Hawk's Pro Skater games, adapting the format to other action 
+                        sports. It was developed by Runecraft (as far as I can tell...) with an unknown 
+                        amount of support on the Playstation release being provided by Shaba Games 
+                        (previously known as a developer of action sports games in their own right), and 
+                        was developed on Neversoft's engine used for the original THPS (though the game has 
+                        many features from THPS2, so presumably some code was shared during that game's 
+                        development). Unlike the THPS series, the Dreamcast port was done in-house by 
+                        Runecraft (this will be important later on) and the PC port was done by the same 
+                        team as THPS2, Grey Matter LTI.
+                    </p>
+                    <p>
+                        I can't get the best read on how this game was developed. The PS1 demo lists only 
+                        Runecraft as a developer (and the game's text is clearly British, with the use of 
+                        "portaloo" and saying the Granny secret rider is "going in for tea" after unlocking 
+                        her), and Shaba Games was also credited for the full release. The game had a 
+                        considerable delay, with the original demo giving a Fall 2000 release date, but the 
+                        game ultimately releasing in May 2001 (the game also has a trailer for the Activision 
+                        O2 sublabel and advertises Mat Hoffman's Pro BMX 2! The game advertises its own 
+                        sequel!!). The interesting thing is that the art noticeably differs between Dreamcast 
+                        and PS1:
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/2/nyccompare.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/2/nyccompare.png" alt="Comparison of New York City Park on Playstation and Dreamcast, the water looks better integrated on Playstation"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Check out the water effect on playstation, using some sort of 
+                                hard to see transparent polygons. On Dreamcast they're fully opaque and are much less 
+                                convincing</sub>
+                        </div>
+                    </div>
+                    <p>
+                        The final FMV for completing the career as Granny (featuring a... less than skilled 
+                        rider dressed as an old woman) also is filmed in an LA area park, away from both 
+                        development teams. Her look also differs drastically between PS1 and Dreamcast and the 
+                        FMV reflects the PS1 look. Either way, I have trouble figuring out what exactly 
+                        happened to make the game notably different between its two major releases.
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/2/grannycompare.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/2/grannycompare.png" alt="Comparison of the Granny character between Playstation and Dreamcast, showing the differing designs"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Yeah, the Dreamcast version is really that dark!</sub>
+                        </div>
+                    </div>
+                    <p>
+                        Anyway, let's get to the PC port: the PC port was released last, with the Dreamcast 
+                        version releasing in September of 2001 (the day after 9/11, and 6 months after the 
+                        Dreamcast's discontinuation, so you'd be forgiven for not noticing...) and the PC 
+                        version coming out in October. The PC port is based off of the PS1 release, but uses 
+                        some assets from the Dreamcast release. Most notably, it uses the Dreamcast versions 
+                        of all the levels.
+                    </p>
+                    <p>
+                        Honestly I was kind of dreading working on this release, because the PC release is 
+                        written in a very strange way. The main executable only initializes some settings, 
+                        sets up the window and direct3d, then loads one of three DLLs and calls three 
+                        functions within it before loading another. Each DLL represents a portion of the 
+                        game: frontend.dll handles the menus, source.dll handles the gameplay, and editor.dll 
+                        handles the park editor (ported over from THPS2, including many THPS2 menu assets). 
+                        Each module reinitializes directinput and directsound for some reason. Ultimately I 
+                        approached this by hooking the DLL loader and patching each DLL as they're loaded. 
+                        I was thinking of rewriting the executable entirely, but I was concerned about 
+                        compatibility with speedrun autosplitters (and I was also lazy).
+                    </p>
+                    <p>
+                        As I'd already patched THPS2 which runs on the same engine, I figured this game would 
+                        be easy to patch as well. While there were some differences in the renderer, it was 
+                        pretty straightforward to get my first frames. The interesting thing was the lack of 
+                        environment I was seeing.
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/2/mhpbfirstframes.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/2/mhpbfirstframes.png" alt="First frames of my new renderer, showing only a few textured models and UI elements"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Textures on the menu counteracted the texture blending mode of the Playstation, so 
+                                they appear double the intended brightness</sub>
+                        </div>
+                    </div>
+                    <p>
+                        Here I learned that the game was trying to load textures in a format my code didn't 
+                        recognize. THPS2 only use paletted 4 and 8 bit color textures, MHPB added support for 
+                        16-bit color in 3 formats: RGB 5:6:5, RGBA 5:5:5:1, and RGBA 4:4:4:4. This was my 
+                        first hint that these were actually the real Dreamcast levels, not just the PS1 levels 
+                        with some Dreamcast retrofits, as Grey Matter had done with THPS2! Those formats were 
+                        straightforward to implement, and now I had mostly gotten things working. All that 
+                        remained was redoing some of the sprite code for UI elements, porting over my code 
+                        to get Bink FMVs working, and fixing some depth issues.
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/2/mhpbtextures.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/2/mhpbtextures.png" alt="Intermediate images of the development of my renderer, one showing level geometry with development textures, another with the final textures"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>For unknown format textures, i briefly replaced them with random color checkerboards for visualization purposes.</sub>
+                        </div>
+                    </div>
+                    <p>
+                        None of the polish work on the renderer was particularly interesting, but it gave me 
+                        some interesting insight. The game was having some trouble handling certain depth 
+                        sorting situations (especially with transparency). I figure the game was taking some 
+                        advantage of the Dreamcast's built in depth peeling, so it could be more relaxed about 
+                        rendering order. Additionally, that version has rare support for the Dreamcast's 
+                        bumpmapping!
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/2/bumpmapcompare.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/2/bumpmapcompare.png" alt="Comparison of the game on Dreamcast and PC, showing the lack of bumpmapped textures on PC"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>My GDEmu died a bit ago and i couldn't get a high quality image. oh well!</sub>
+                        </div>
+                    </div>
+                    <p>
+                        Another alpha blending issue that I was interested in is that certain textures were 
+                        drawing with strange colors compared to the Dreamcast release. I think what happened 
+                        here is that the Dreamcast renderer doesn't support some blending modes that the PS1 
+                        renderer did (if they used Treyarch's ports of THPS as a base, this is almost 
+                        definitely what happened. Similar issues exist in those as well). This results in 
+                        branding appearing in the wrong colors, which I thought would be a much more urgent 
+                        issue:
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/2/logocompare.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/2/logocompare.png" alt="Comparison image of the game on Dreamcast, PC, and PS1, showing the differences of a logo texture in each"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>
+                                Note how on Playstation, the logo is "burned in", using a subtractive blending mode. 
+                                That was retained for Dreamcast, but it didn't correctly support the effect, making 
+                                it look like a sticker. Also note the incorrect transparency on PC.
+                            </sub>
+                        </div>
+                    </div>
+                    <p>
+                        Ultimately I opted to keep those as-is, because they would also affect certain 
+                        elements that relied upon the correct blending behavior that were brought over from 
+                        the PS1 release. Someday I would like to see what the PS1 levels would look like 
+                        loaded into this version of the engine. I figure it would look a whole lot nicer that 
+                        way. I'd gotten it looking reasonably like the Dreamcast version (I even fixed some 
+                        texture transparency bugs from the PC release!), with some settings to get it closer 
+                        to the PS1 look if people would like, which I think is a good compromise for now.
+                    </p>
+                    <div class="writeupembedcontainer">
+                        <div class="writeupembed">
+                            <div class="writeupembedcontentcontainer">
+                                <a href="img/2/mhpbfinal.png" target="_blank">
+                                    <div class="writeupembedcontent">
+                                        <img src="img/2/mhpbfinal.png" alt="Final images of PARTYMOD MHPB, showing different display settings"/>
+                                    </div>
+                                </a>
+                            </div>
+                            <sub>Dreamcast style on the left, Playstation style on the right</sub>
+                        </div>
+                    </div>
+                    <p>
+                        With the renderer done, I moved onto input. I thought this would be the same as the 
+                        renderer, just porting the THPS2 code into MHPB, but I was wrong! The input handler 
+                        is entirely new. Previously they were emulating a PS1 controller, but for this they 
+                        rewrote it entirely and use what is kind of a strange system. They provide a few 
+                        mechanisms, one to get the current controller state like how things used to work, 
+                        and another where a 32-bit mask is given which represents action-based controls. 
+                        I ended up putting the new mechanisms on top of my old playstation controller 
+                        emulation written for THPS2 because I'm lazy. It was straightforward to write and 
+                        frankly not that interesting. Rumble support was taken out for this game, which is 
+                        a slight bummer.
+                    </p>
+                    <p>
+                        The last interesting note is the game's mouse handling. Both THPS2 and MHPB use the 
+                        absolute position of the mouse, but THPS2 uses window space positioning and MHPB uses 
+                        some translation between screen and window space that doesn't work at all. On some modern 
+                        systems, the pointer will jump somewhere around 64 pixels at a time, making most 
+                        controls unreachable in its original form. I was able to adapt my THPS2 mouse code 
+                        easily, making those controls usable for the first time in a while.
+                    </p>
+                    <p>
+                        Honestly, that's kind of the theme of this port. Things that worked in THPS2 were 
+                        often broken. I can only imagine that this port was really rushed to just get the 
+                        game out of the door and recoup some costs. Some rendering features were broken to a 
+                        potentially harmful degree (glass shards would sometimes take over the screen and 
+                        start strobing. This was handled correctly in THPS2 but for some reason regressed for 
+                        MHPB). I'm happy to hopefully get this game into a playable state for anyone wanting 
+                        to check out the PC version. This game is often forgotten about despite being one of 
+                        the better action sports games of the time. I want to do some more work to restore 
+                        some of the PS1 look, but as it is, it's a good version to play with its fast load 
+                        times.
+                    </p>
+                    <div class="writeuphomebuttoncontainer">
+                        <div class="writeuphomebutton">
+                            <a href="../index.html">
+                                <div class="buttonlink">
+                                    ← Back
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
